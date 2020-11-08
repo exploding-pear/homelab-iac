@@ -1,4 +1,15 @@
+
 - hosts: all
   remote_user: ubuntu
+  tasks:
+  - name: update system
+    apt:
+      update_cache: yes
+    become: yes
+
+- name: docker install
+  hosts: all
+  remote_user: ubuntu
   roles:
+  - apt-over-https
   - docker

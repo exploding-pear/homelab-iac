@@ -1,0 +1,29 @@
+- name: apt-transport-https on system and up to date
+  apt:
+    name: apt-transport-https
+    state: latest
+  become: true
+
+- name: ca-certificates on system and up to date
+  apt:
+    name: ca-certificates
+    state: latest
+  become: true
+
+- name: curl on system and up to date
+  apt:
+    name: curl
+    state: latest
+  become: true
+
+- name: gnupg-agent on system and up to date
+  apt:
+    name: gnupg-agent
+    state: latest
+  become: true
+
+- name: software-properties-common on system and up to date
+  apt:
+    name: software-properties-common
+    state: latest
+  become: true
