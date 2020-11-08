@@ -1,0 +1,24 @@
+- name: uninstalling docker
+  apt:
+    name: docker
+    state: absent
+
+- name: uninstall old version of docker-engine
+  apt:
+    name: docker-engine
+    state: absent
+
+- name: uninstall old version of docker.io
+  apt:
+    name: docker.io
+    state: absent
+
+- name: uninstall old version of containerd
+  apt:
+    name: containerd
+    state: absent
+    
+- name: uninstall old version of runc
+  apt:
+    name: runc
+    state: absent
