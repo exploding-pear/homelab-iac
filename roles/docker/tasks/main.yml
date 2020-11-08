@@ -54,6 +54,18 @@
     state: latest
   become: true
 
+- name: ensure docker group exists
+  group:
+    name: docker
+    state: present
+  
+- name: ensure user is part of the docker group
+  user:
+    name: ubuntu
+    group: docker
+    append: yes
+  become: true
+
 - name: ensure docker is started, and starts on system reboots
   systemd:
     name: docker
