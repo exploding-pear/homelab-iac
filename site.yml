@@ -5,6 +5,9 @@
   - name: update system
     apt:
       update_cache: yes
+      upgrade: safe
+      autoclean: yes
+      autoremove: yes
     become: yes
 
 - name: docker install
