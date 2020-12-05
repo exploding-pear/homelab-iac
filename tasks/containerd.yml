@@ -1,0 +1,47 @@
+- name: ensure apt-transport-https is installed
+  apt:
+    name: apt-transport-https
+    state: present
+
+- name: ensure ca-certificates is installed
+  apt:
+    name: ca-certificates
+    state: present
+    
+- name: ensure curl is installed
+  apt:
+    name: curl
+    state: present
+    
+- name: ensure software-properties-common is installed
+  apt:
+    name: software-properties-common
+    state: present
+
+- name: ensure docker gpg key is on system
+  apt_key:
+    id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: ensure docker repo is on system
+  apt_repository:
+    repo: deb [arch=arm64] https://download.docker.com/linux/ubuntu focal stable
+    state: present
+
+- name: ensure latest version of containerd.io installed
+  apt:
+    name: containerd.io
+    state: latest
+
+- name: store containerd default config in 
+  shell:
+    cmd: containerd config default > /etc/containerd/config.toml
+    chdir: /etc/containerd/
+    creates: /etc/containerd/config.toml
+
+- name: restart containerd
+  systemd:
+    name: containerd
+    state: restarted
+    enabled: yes
