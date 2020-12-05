@@ -80,11 +80,13 @@
     name: containerd.io
     state: latest
 
-- name: store containerd default config in 
-  shell:
-    cmd: containerd config default > /etc/containerd/config.toml
-    chdir: /etc/containerd/
-    creates: /etc/containerd/config.toml
+- name: store containerd config in /etc/containerd/config.toml
+  copy:
+    src: files/containerd.toml
+    dest: /etc/containerd/config.toml
+    owner: root
+    group: root
+    mode: '0644'
 
 - name: restart containerd
   systemd:
