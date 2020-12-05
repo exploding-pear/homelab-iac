@@ -25,9 +25,6 @@
   apt:
     name: curl
     state: present
-
-- name: ensure ansible.posix is installed
-  shell: ansible-galaxy collection install ansible.posix
     
 - name: ensure software-properties-common is installed
   apt:
