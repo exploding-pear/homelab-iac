@@ -10,5 +10,5 @@
       autoremove: yes
 
   tasks:
-    - include: tasks/containerd.yml
+    - include: tasks/kubernetes.yml
     - include: tasks/cron.yml

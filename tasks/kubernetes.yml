@@ -36,6 +36,7 @@
   apt_repository:
     repo: deb [arch=arm64] https://download.docker.com/linux/ubuntu focal stable
     state: present
+    update_cache: yes
 
 - name: ensure latest version of containerd.io installed
   apt:
@@ -53,3 +54,49 @@
     name: containerd
     state: restarted
     enabled: yes
+
+- name: ensure that google cloud gpg key is on system
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: ensure kubernetes repo is on system
+  apt_repository:
+    repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+    update_cache: yes
+
+- name: ensure kubelet is installed
+  apt:
+    name: kubelet
+    state: present
+
+- name: prevent kubelet from being upgraded
+  dpkg_selections:
+    name: kubelet
+    selection: hold
+
+- name: ensure kubeadm is installed
+  apt:
+    name: kubeadm
+    state: present
+
+- name: prevent kubeadm from being upgraded
+  dpkg_selections:
+    name: kubeadm
+    selection: hold
+
+- name: ensure kubectl is installed
+  apt:
+    name: kubectl
+    state: present
+
+- name: prevent kubectl from being upgraded
+  dpkg_selections:
+    name: kubectl
+    selection: hold
+
+- name: Check that the control-plane file exists
+  stat:
+    path: /home/ubuntu/control-plane
+  register: control-plane
