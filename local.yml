@@ -2,12 +2,12 @@
 - hosts: localhost
   become: true
   pre_tasks:
-    - name: update system
-      apt:
-        update_cache: yes
-        upgrade: safe
-        autoclean: yes
-        autoremove: yes
+  - name: update system
+    apt:
+      update_cache: yes
+      upgrade: safe
+      autoclean: yes
+      autoremove: yes
 
   tasks:
     - include: tasks/containerd.yml
