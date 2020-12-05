@@ -99,4 +99,4 @@
 - name: Check that the control-plane file exists
   stat:
     path: /home/ubuntu/control-plane
-  register: control-plane
+  register: controlplane
