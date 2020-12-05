@@ -11,13 +11,5 @@
     become: yes
 
   tasks:
-    - name: ensure that br_netfilter module is loaded
-      community.general.modprobe:
-        name: br_netfilter
-        state: present
-
-    - name: ensure that swap is disabled
-      shell: swapoff -a
-
     - include: tasks/containerd.yml
     - include: tasks/cron.yml
