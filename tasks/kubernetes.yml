@@ -3,6 +3,11 @@
     name: br_netfilter
     state: present
 
+- name: ensure that overlay module is loaded
+  modprobe:
+    name: overlay
+    state: present
+
 - name: ensure that swap is disabled
   shell: swapoff -a
 
@@ -37,6 +42,38 @@
     repo: deb [arch=arm64] https://download.docker.com/linux/ubuntu focal stable
     state: present
     update_cache: yes
+
+- name: copy overlay.conf into /etc/modules-load.d
+  copy:
+    src: files/containerd.conf
+    dest: /etc/modules-load.d
+    owner: root
+    group: root
+    mode: '0644'
+
+- ansible.posix.sysctl:
+    name: net.bridge.bridge-nf-call-iptables
+    value: '1'
+    sysctl_file: /etc/sysctl.d/99-kubernetes-cri.conf
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- ansible.posix.sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_file: /etc/sysctl.d/99-kubernetes-cri.conf
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- ansible.posix.sysctl:
+    name: net.bridge.bridge-nf-call-ip6tables
+    value: '1'
+    sysctl_file: /etc/sysctl.d/99-kubernetes-cri.conf
+    sysctl_set: yes
+    state: present
+    reload: yes
 
 - name: ensure latest version of containerd.io installed
   apt:
