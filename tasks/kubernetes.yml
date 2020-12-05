@@ -133,6 +133,14 @@
     name: kubectl
     selection: hold
 
+- name: store kubeadm config file
+  copy:
+    src: files/kubeadm.conf
+    dest: /var/lib/kubelet/config.yaml
+    owner: root
+    group: root
+    mode: '0644'
+
 - name: Check that the control-plane file exists
   stat:
     path: /home/ubuntu/control-plane
